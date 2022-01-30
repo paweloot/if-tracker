@@ -1,15 +1,16 @@
-package dev.pawelbanas.iftracker
+package dev.pawelbanas.iftracker.feature.mealdatalist
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.time.Duration
 import java.time.LocalDateTime
+import javax.inject.Inject
 
 interface MealDataRepository {
     fun getAllMealData(): Flow<List<MealData>>
 }
 
-class DatabaseMealDataRepository : MealDataRepository {
+class DatabaseMealDataRepository @Inject constructor() : MealDataRepository {
     override fun getAllMealData(): Flow<List<MealData>> = flowOf(
         listOf(
             MealData(

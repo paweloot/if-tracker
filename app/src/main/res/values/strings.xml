@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">IF Tracker</string>
+    <string name="meal_data_caption_goal">Goal</string>
+    <string name="meal_data_caption_last_meal">Last meal</string>
+    <string name="meal_data_caption_first_meal">First meal</string>
 </resources>

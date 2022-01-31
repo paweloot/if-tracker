@@ -1,4 +1,4 @@
-package dev.pawelbanas.iftracker.feature.mealdatalist
+package dev.pawelbanas.iftracker.feature.mealdata
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -23,7 +23,7 @@ import dev.pawelbanas.iftracker.ui.theme.Elevations
 
 @Composable
 fun MealDataListScreen(viewModel: MealDataListViewModel = viewModel()) {
-    val mealsData by viewModel.mealsData.collectAsState(initial = emptyList())
+    val mealsData by viewModel.getMealsData().collectAsState(initial = emptyList())
 
     LazyColumn(modifier = Modifier.padding(all = Dimens.medium)) {
         items(mealsData) {

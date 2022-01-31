@@ -1,7 +1,9 @@
-package dev.pawelbanas.iftracker.feature.mealdatalist
+package dev.pawelbanas.iftracker.feature.mealdata
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.pawelbanas.iftracker.core.db.entity.MealData
+import dev.pawelbanas.iftracker.feature.mealdata.domain.MealDataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.Duration
@@ -15,11 +17,12 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class MealDataListViewModel @Inject constructor() : ViewModel() {
+class MealDataListViewModel @Inject constructor(
+    private val mealDataRepository: MealDataRepository
+) : ViewModel() {
 
-    private val mealDataRepository: MealDataRepository = DatabaseMealDataRepository()
-    val mealsData: Flow<List<UiMealData>> = mealDataRepository.getAllMealData()
-        .map { it.map(MealData::toUiMealData) }
+    fun getMealsData(): Flow<List<UiMealData>> =
+        mealDataRepository.getAllMealData().map { it.map(MealData::toUiMealData) }
 }
 
 fun MealData.toUiMealData() = UiMealData(

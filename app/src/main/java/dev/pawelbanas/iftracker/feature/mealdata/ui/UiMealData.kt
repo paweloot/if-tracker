@@ -1,11 +1,6 @@
-package dev.pawelbanas.iftracker.feature.mealdata
+package dev.pawelbanas.iftracker.feature.mealdata.ui
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.pawelbanas.iftracker.core.db.entity.MealData
-import dev.pawelbanas.iftracker.feature.mealdata.domain.MealDataRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -13,16 +8,16 @@ import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
 import java.util.*
-import javax.inject.Inject
 
-@HiltViewModel
-class MealDataListViewModel @Inject constructor(
-    private val mealDataRepository: MealDataRepository
-) : ViewModel() {
-
-    fun getMealsData(): Flow<List<UiMealData>> =
-        mealDataRepository.getAllMealData().map { it.map(MealData::toUiMealData) }
-}
+data class UiMealData(
+    val dayOfWeekName: String,
+    val monthWithDay: String,
+    val formattedFirstMealTime: String,
+    val formattedLastMealTime: String,
+    val goal: String,
+    val timeDifference: String,
+    val goalStatus: GoalStatus
+)
 
 fun MealData.toUiMealData() = UiMealData(
     dayOfWeekName = firstMealTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),

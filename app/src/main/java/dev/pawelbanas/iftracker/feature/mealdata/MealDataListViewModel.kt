@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.Duration
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
@@ -29,10 +28,10 @@ fun MealData.toUiMealData() = UiMealData(
     dayOfWeekName = firstMealTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
     monthWithDay = firstMealTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)),
     formattedFirstMealTime = firstMealTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
-    formattedLastMealTime = lastMealTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
+    formattedLastMealTime = lastMealTime?.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)) ?: "-",
     goal = "${goal.toHours()}h",
-    timeDifference = firstMealTime.formattedTimeDifferenceBetween(lastMealTime),
-    isGoalMet = ChronoUnit.MINUTES.between(firstMealTime, lastMealTime) <= goal.toMinutes()
+    timeDifference = lastMealTime?.let { firstMealTime.formattedTimeDifferenceBetween(it) } ?: "-",
+    goalStatus = GoalStatus.fromMealTimeData(firstMealTime, lastMealTime, goal)
 )
 
 private fun LocalDateTime.formattedTimeDifferenceBetween(another: LocalDateTime): String {
@@ -40,6 +39,7 @@ private fun LocalDateTime.formattedTimeDifferenceBetween(another: LocalDateTime)
     val minutesInHour = Duration.ofHours(1).toMinutes()
     val hours = totalDiffInMinutes / minutesInHour
     val minutes = totalDiffInMinutes % minutesInHour
-    return LocalTime.of(hours.toInt(), minutes.toInt())
-        .format(DateTimeFormatter.ofPattern("hh:mm"))
+    return "${hours.padWithZero()}:${minutes.padWithZero()}"
 }
+
+private fun Long.padWithZero() = toString().padStart(2, '0')

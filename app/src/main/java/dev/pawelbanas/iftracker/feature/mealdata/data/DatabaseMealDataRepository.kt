@@ -21,6 +21,14 @@ class DatabaseMealDataRepository @Inject constructor(
         mealDataDao.getByDate(localDate.format(DateTimeFormatter.ofPattern(DB_DATE_PATTERN)))
     }
 
+    override suspend fun insert(mealData: MealData) = withContext(dispatchers.io) {
+        mealDataDao.insert(mealData)
+    }
+
+    override suspend fun update(mealData: MealData) = withContext(dispatchers.io) {
+        mealDataDao.update(mealData)
+    }
+
     companion object {
         private const val DB_DATE_PATTERN = "yyyy-MM-dd"
     }

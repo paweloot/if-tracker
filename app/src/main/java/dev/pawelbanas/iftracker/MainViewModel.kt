@@ -3,15 +3,16 @@ package dev.pawelbanas.iftracker
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.pawelbanas.iftracker.feature.mealdata.domain.MealDataRepository
+import dev.pawelbanas.iftracker.feature.mealdata.domain.RegisterMealTimeUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val mealDataRepository: MealDataRepository
+    private val registerMealTimeUseCase: RegisterMealTimeUseCase
 ) : ViewModel() {
 
-    fun addFirstOrLastMealData() = viewModelScope.launch {
+    fun registerMealTime() = viewModelScope.launch {
+        registerMealTimeUseCase()
     }
 }

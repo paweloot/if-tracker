@@ -10,12 +10,14 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.pawelbanas.iftracker.feature.mealdata.MealDataListScreen
+import dev.pawelbanas.iftracker.feature.mealdata.MealDataListViewModel
 import dev.pawelbanas.iftracker.ui.theme.IFTrackerTheme
 
 @AndroidEntryPoint
@@ -46,7 +48,7 @@ fun IFTrackerScaffold(mainViewModel: MainViewModel = viewModel()) {
             FloatingActionButton(
                 onClick = {
                     when (navController.currentBackStackEntry?.destination?.route) {
-                        Screen.MealDataList.route -> mainViewModel.addFirstOrLastMealData()
+                        Screen.MealDataList.route -> mainViewModel.registerMealTime()
                     }
                 }) {
                 Icon(painter = painterResource(id = R.drawable.ic_start_eating), contentDescription = "Mark first meal")
@@ -60,7 +62,10 @@ fun IFTrackerScaffold(mainViewModel: MainViewModel = viewModel()) {
             startDestination = Screen.MealDataList.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.MealDataList.route) { MealDataListScreen() }
+            composable(Screen.MealDataList.route) {
+                val viewModel = hiltViewModel<MealDataListViewModel>()
+                MealDataListScreen(viewModel)
+            }
         }
     }
 }

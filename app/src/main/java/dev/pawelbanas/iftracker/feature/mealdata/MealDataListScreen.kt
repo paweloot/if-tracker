@@ -16,13 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.pawelbanas.iftracker.R
 import dev.pawelbanas.iftracker.ui.theme.Dimens
 import dev.pawelbanas.iftracker.ui.theme.Elevations
 
 @Composable
-fun MealDataListScreen(viewModel: MealDataListViewModel = viewModel()) {
+fun MealDataListScreen(viewModel: MealDataListViewModel) {
     val mealsData by viewModel.getMealsData().collectAsState(initial = emptyList())
 
     LazyColumn(modifier = Modifier.padding(all = Dimens.medium)) {
@@ -51,7 +50,11 @@ fun MealDataRow(mealData: UiMealData) {
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_last_meal), text = mealData.formattedLastMealTime)
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_goal), text = mealData.goal)
 
-            val tint = if (mealData.isGoalMet) Color.Green else Color.Red
+            val tint = when (mealData.goalStatus) {
+                GoalStatus.MET -> Color.Green
+                GoalStatus.INCOMPLETE -> Color.Unspecified
+                GoalStatus.NOT_MET -> Color.Red
+            }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_goal_achieved), contentDescription = "",

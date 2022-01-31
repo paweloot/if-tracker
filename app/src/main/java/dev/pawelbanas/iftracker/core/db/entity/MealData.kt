@@ -9,6 +9,6 @@ import java.time.LocalDateTime
 data class MealData(
     @PrimaryKey(autoGenerate = true) val mealDataId: Int = 0,
     val firstMealTime: LocalDateTime,
-    val lastMealTime: LocalDateTime,
-    val goal: Duration
+    val lastMealTime: LocalDateTime? = null,
+    val goal: Duration = Duration.ofHours(10)
 )

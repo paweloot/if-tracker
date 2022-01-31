@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.pawelbanas.iftracker.feature.mealdatalist.MealDataListScreen
+import dev.pawelbanas.iftracker.feature.mealdata.MealDataListScreen
 import dev.pawelbanas.iftracker.ui.theme.IFTrackerTheme
 
 @AndroidEntryPoint

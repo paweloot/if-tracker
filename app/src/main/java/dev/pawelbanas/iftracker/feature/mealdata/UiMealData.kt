@@ -1,4 +1,4 @@
-package dev.pawelbanas.iftracker.feature.mealdatalist
+package dev.pawelbanas.iftracker.feature.mealdata
 
 data class UiMealData(
     val dayOfWeekName: String,

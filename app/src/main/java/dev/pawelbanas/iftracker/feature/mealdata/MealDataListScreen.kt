@@ -24,7 +24,14 @@ import dev.pawelbanas.iftracker.ui.theme.Elevations
 fun MealDataListScreen(viewModel: MealDataListViewModel) {
     val mealsData by viewModel.getMealsData().collectAsState(initial = emptyList())
 
-    LazyColumn(modifier = Modifier.padding(all = Dimens.medium)) {
+    LazyColumn(
+        modifier = Modifier.padding(
+            top = Dimens.medium,
+            start = Dimens.medium,
+            end = Dimens.medium
+        ),
+        verticalArrangement = Arrangement.spacedBy(Dimens.small)
+    ) {
         items(mealsData) {
             MealDataRow(mealData = it)
         }
@@ -32,14 +39,16 @@ fun MealDataListScreen(viewModel: MealDataListViewModel) {
 }
 
 @Composable
-fun MealDataRow(mealData: UiMealData) {
+fun MealDataRow(mealData: UiMealData, modifier: Modifier = Modifier) {
     Card(
-        elevation = Elevations.small,
-        modifier = Modifier.fillMaxWidth()
+        elevation = Elevations.tiny,
+        modifier = modifier
+            .fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier.padding(Dimens.small)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = mealData.dayOfWeekName, style = MaterialTheme.typography.h6)

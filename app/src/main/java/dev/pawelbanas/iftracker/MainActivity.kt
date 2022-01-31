@@ -60,7 +60,9 @@ fun IFTrackerScaffold(mainViewModel: MainViewModel = viewModel()) {
         NavHost(
             navController = navController,
             startDestination = Screen.MealDataList.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
             composable(Screen.MealDataList.route) {
                 val viewModel = hiltViewModel<MealDataListViewModel>()

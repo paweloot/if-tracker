@@ -1,4 +1,4 @@
-package dev.pawelbanas.iftracker.feature.mealdata
+package dev.pawelbanas.iftracker.feature.mealdata.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -12,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,21 +58,18 @@ fun MealDataRow(mealData: UiMealData, modifier: Modifier = Modifier) {
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_last_meal), text = mealData.formattedLastMealTime)
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_goal), text = mealData.goal)
 
-            val tint = when (mealData.goalStatus) {
-                GoalStatus.MET -> Color.Green
-                GoalStatus.INCOMPLETE -> Color.Unspecified
-                GoalStatus.NOT_MET -> Color.Red
-            }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_goal_achieved), contentDescription = "",
-                    colorFilter = ColorFilter.tint(tint)
+                    painter = painterResource(id = mealData.goalStatus.iconResId), contentDescription = "",
+                    colorFilter = ColorFilter.tint(mealData.goalStatus.iconTint)
                 )
-                Text(
-                    text = mealData.timeDifference,
-                    style = MaterialTheme.typography.caption,
-                    color = tint
-                )
+                if (mealData.goalStatus != GoalStatus.Incomplete) {
+                    Text(
+                        text = mealData.timeDifference,
+                        style = MaterialTheme.typography.caption,
+                        color = mealData.goalStatus.iconTint
+                    )
+                }
             }
         }
     }

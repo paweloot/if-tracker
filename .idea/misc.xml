@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/compose-model-1643562210635.xml" value="0.335" />
+        <entry key="app/src/main/res/drawable/ic_goal_pending.xml" value="0.1205" />
         <entry key="app/src/main/res/drawable/ic_start_eating.xml" value="0.1195" />
         <entry key="app/src/main/res/drawable/ic_stop_eating.xml" value="0.1195" />
       </map>

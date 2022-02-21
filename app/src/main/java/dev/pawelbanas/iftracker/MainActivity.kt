@@ -57,6 +57,7 @@ fun IFTrackerScaffold(mainViewModel: MainViewModel = viewModel()) {
                 enabled = todayMealData?.lastMealTime == null,
                 modifier = Modifier.defaultMinSize(minWidth = 56.dp, minHeight = 56.dp),
                 shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
                 onClick = {
                     when (navController.currentBackStackEntry?.destination?.route) {
                         Screen.MealDataList.route -> mainViewModel.registerMealTime()

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MealDataDao {
 
-    @Query("select * from MealData")
+    @Query("select * from MealData order by date(firstMealTime) desc")
     fun getAll(): Flow<List<MealData>>
 
     @Query("select * from MealData where substr(firstMealTime, 0, 11) = :date")

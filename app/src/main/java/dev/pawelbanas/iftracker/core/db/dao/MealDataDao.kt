@@ -14,6 +14,9 @@ interface MealDataDao {
     fun getAll(): Flow<List<MealData>>
 
     @Query("select * from MealData where substr(firstMealTime, 0, 11) = :date")
+    fun getByDateAsFlow(date: String): Flow<MealData?>
+
+    @Query("select * from MealData where substr(firstMealTime, 0, 11) = :date")
     suspend fun getByDate(date: String): MealData?
 
     @Insert

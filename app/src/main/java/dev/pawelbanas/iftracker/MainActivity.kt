@@ -3,13 +3,18 @@ package dev.pawelbanas.iftracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -45,13 +50,22 @@ fun IFTrackerScaffold(mainViewModel: MainViewModel = viewModel()) {
             ) {}
         },
         floatingActionButton = {
-            FloatingActionButton(
+            val todayMealData by mainViewModel.todayMealData.collectAsState(initial = null)
+            val iconResource = if (todayMealData == null) R.drawable.ic_start_eating else R.drawable.ic_stop_eating
+
+            Button(
+                enabled = todayMealData?.lastMealTime == null,
+                modifier = Modifier.defaultMinSize(minWidth = 56.dp, minHeight = 56.dp),
+                shape = CircleShape,
                 onClick = {
                     when (navController.currentBackStackEntry?.destination?.route) {
                         Screen.MealDataList.route -> mainViewModel.registerMealTime()
                     }
                 }) {
-                Icon(painter = painterResource(id = R.drawable.ic_start_eating), contentDescription = "Mark first meal")
+                Icon(
+                    painter = painterResource(id = iconResource),
+                    contentDescription = null
+                )
             }
         },
         floatingActionButtonPosition = FabPosition.Center,

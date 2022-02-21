@@ -6,6 +6,7 @@ import java.time.LocalDate
 
 interface MealDataRepository {
     fun getAllMealData(): Flow<List<MealData>>
+    fun getTodayMealDataAsFlow(): Flow<MealData?>
     suspend fun getByDate(localDate: LocalDate): MealData?
     suspend fun insert(mealData: MealData)
     suspend fun update(mealData: MealData)

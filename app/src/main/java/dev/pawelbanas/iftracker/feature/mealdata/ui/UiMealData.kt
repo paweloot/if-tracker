@@ -25,7 +25,7 @@ fun MealData.toUiMealData() = UiMealData(
     formattedFirstMealTime = firstMealTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
     formattedLastMealTime = lastMealTime?.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)) ?: "-",
     goal = "${goal.toHours()}h",
-    timeDifference = lastMealTime?.let { firstMealTime.formattedTimeDifferenceBetween(it) } ?: "-",
+    timeDifference = lastMealTime?.let { firstMealTime.formattedTimeDifferenceBetween(it) } ?: "--:--",
     goalStatus = GoalStatus.fromMealTimeData(firstMealTime, lastMealTime, goal)
 )
 

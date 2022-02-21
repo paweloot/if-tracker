@@ -25,11 +25,13 @@ fun MealDataListScreen(viewModel: MealDataListViewModel) {
     val mealsData by viewModel.getMealsData().collectAsState(initial = emptyList())
 
     LazyColumn(
-        modifier = Modifier.padding(
-            top = Dimens.medium,
-            start = Dimens.medium,
-            end = Dimens.medium
-        ),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                top = Dimens.medium,
+                start = Dimens.medium,
+                end = Dimens.medium
+            ),
         verticalArrangement = Arrangement.spacedBy(Dimens.small)
     ) {
         items(mealsData) {
@@ -56,7 +58,7 @@ fun MealDataRow(mealData: UiMealData, modifier: Modifier = Modifier) {
             }
 
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_first_meal), text = mealData.formattedFirstMealTime)
-            CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_last_meal), text = mealData.formattedFirstMealTime)
+            CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_last_meal), text = mealData.formattedLastMealTime)
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_goal), text = mealData.goal)
 
             Column(

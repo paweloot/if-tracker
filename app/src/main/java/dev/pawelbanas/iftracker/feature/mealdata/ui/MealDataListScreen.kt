@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import dev.pawelbanas.iftracker.R
 import dev.pawelbanas.iftracker.ui.theme.Dimens
 import dev.pawelbanas.iftracker.ui.theme.Elevations
@@ -47,7 +48,7 @@ fun MealDataRow(mealData: UiMealData, modifier: Modifier = Modifier) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier.padding(Dimens.small)
+            modifier = Modifier.padding(vertical = Dimens.small)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = mealData.dayOfWeekName, style = MaterialTheme.typography.h6)
@@ -55,29 +56,31 @@ fun MealDataRow(mealData: UiMealData, modifier: Modifier = Modifier) {
             }
 
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_first_meal), text = mealData.formattedFirstMealTime)
-            CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_last_meal), text = mealData.formattedLastMealTime)
+            CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_last_meal), text = mealData.formattedFirstMealTime)
             CaptionTextColumn(caption = stringResource(R.string.meal_data_caption_goal), text = mealData.goal)
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.defaultMinSize(minWidth = 32.dp)
+            ) {
                 Image(
-                    painter = painterResource(id = mealData.goalStatus.iconResId), contentDescription = "",
+                    painter = painterResource(id = mealData.goalStatus.iconResId),
+                    contentDescription = "",
                     colorFilter = ColorFilter.tint(mealData.goalStatus.iconTint)
                 )
-                if (mealData.goalStatus != GoalStatus.Incomplete) {
-                    Text(
-                        text = mealData.timeDifference,
-                        style = MaterialTheme.typography.caption,
-                        color = mealData.goalStatus.iconTint
-                    )
-                }
+                Text(
+                    text = mealData.timeDifference,
+                    style = MaterialTheme.typography.caption,
+                    color = mealData.goalStatus.iconTint
+                )
             }
         }
     }
 }
 
 @Composable
-private fun CaptionTextColumn(caption: String, text: String) {
-    Column {
+private fun CaptionTextColumn(caption: String, text: String, modifier: Modifier = Modifier) {
+    Column(modifier) {
         Text(text = caption, style = MaterialTheme.typography.caption)
         Text(text = text)
     }

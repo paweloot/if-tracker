@@ -17,8 +17,10 @@ class DatabaseMealDataRepository @Inject constructor(
 
     override fun getAllMealData(): Flow<List<MealData>> = mealDataDao.getAll()
 
+    override fun getTodayMealDataAsFlow(): Flow<MealData?> = mealDataDao.getByDateAsFlow(LocalDate.now().toDbDateFormat())
+
     override suspend fun getByDate(localDate: LocalDate): MealData? = withContext(dispatchers.io) {
-        mealDataDao.getByDate(localDate.format(DateTimeFormatter.ofPattern(DB_DATE_PATTERN)))
+        mealDataDao.getByDate(localDate.toDbDateFormat())
     }
 
     override suspend fun insert(mealData: MealData) = withContext(dispatchers.io) {
@@ -28,6 +30,8 @@ class DatabaseMealDataRepository @Inject constructor(
     override suspend fun update(mealData: MealData) = withContext(dispatchers.io) {
         mealDataDao.update(mealData)
     }
+
+    private fun LocalDate.toDbDateFormat() = format(DateTimeFormatter.ofPattern(DB_DATE_PATTERN))
 
     companion object {
         private const val DB_DATE_PATTERN = "yyyy-MM-dd"

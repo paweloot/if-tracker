@@ -9,10 +9,9 @@ class RegisterMealTimeUseCase @Inject constructor(private val mealDataRepository
 
     suspend operator fun invoke() {
         val todayMealData = mealDataRepository.getByDate(LocalDate.now())
-        if (todayMealData == null || todayMealData.lastMealTime != null) {
-            registerFirstMealTime()
-        } else {
-            registerLastMealTime(todayMealData)
+        when {
+            todayMealData == null -> registerFirstMealTime()
+            todayMealData.lastMealTime == null -> registerLastMealTime(todayMealData)
         }
     }
 
